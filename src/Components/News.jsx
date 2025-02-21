@@ -33,12 +33,12 @@ const News = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      let url = ;
-      if (searchQuery) {
-         url = 
+      let url = 
+      if(searchQuery) {
+        url =  
+
       }
-
-
+             
       const response = await axios.get(url)
       const fetchedNews = response.data.articles
 
@@ -51,6 +51,9 @@ const News = () => {
       setHeadline(fetchedNews[0])
       setNews(fetchedNews.slice(1, 7))
 
+      const savedBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || []
+      setBookmarks(savedBookmarks)
+
       console.log(news)
     }
     fetchNews()
@@ -58,8 +61,10 @@ const News = () => {
 
   const handleCategoryClick = (e, category) => {
     e.preventDefault();
-    setSearchQuery(searchInput)
-  }
+    setSelectedCategory(category);  // <-- Fix: Update selected category
+    setSearchQuery('');  // Optional: Reset search query
+  };
+  
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -75,11 +80,12 @@ const News = () => {
 
   const handleBookmarkClick = (article) => {
     setBookmarks((prevBookmarks) => {
-      const updateBookmarks = prevBookmarks.find
+      const updatedBookmarks = prevBookmarks.find
         ((bookmark) => bookmark.title === article.title) ?
         prevBookmarks.filter((bookmark) => bookmark.title !== article.title) :
         [...prevBookmarks, article]
-      return updateBookmarks
+        localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks))
+      return updatedBookmarks
     })
   }
 
@@ -101,7 +107,7 @@ const News = () => {
         <div className='navbar'>
           <div className='user'>
             <img src={userImg} alt="User Image" />
-            <p>Marrry's Blog</p>
+            <p>Atharva's Blog</p>
           </div>
           <nav className='categories'>
             <h1 className="nav-heading">Categories</h1>
