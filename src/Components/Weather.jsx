@@ -9,7 +9,7 @@ const Weather = () => {
   useEffect(() => {
     const fetchDefaultLocation = async () => {
       const defaultLocation = "Pune";
-      const url = ``;
+      const url = 
       const response = await axios.get(url);
       setData(response.data);
     };
@@ -19,7 +19,7 @@ const Weather = () => {
   const search = async () => {
     if (!location) return;
 
-    const url = ``;
+    const url = 
 
     try {
       const response = await axios.get(url);

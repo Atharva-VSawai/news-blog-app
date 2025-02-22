@@ -33,10 +33,9 @@ const News = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      let url = ``
+      let url = 
       if(searchQuery) {
-        url =  ``
-
+        url =  
       }
              
       const response = await axios.get(url)
@@ -182,7 +181,14 @@ const News = () => {
           <Calender />
         </div>
       </div>
-      <footer className='news-footer'>Footer</footer>
+      <footer className='news-footer'>
+        <p>
+          <span>News & Blogs App</span>
+        </p>
+        <p>
+          <span>&copy; All Rights Reserved, By Atharva</span>
+        </p>  
+      </footer>
     </div>
   )
 }
