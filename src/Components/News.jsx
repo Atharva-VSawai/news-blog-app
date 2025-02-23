@@ -33,9 +33,8 @@ const News = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&apikey={}}`
-      if(searchQuery) {
-        url =  `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&apikey={}}`
+      let url = 
+        url =  
 
       }
              
