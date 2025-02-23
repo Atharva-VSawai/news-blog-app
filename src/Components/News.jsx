@@ -33,9 +33,10 @@ const News = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      let url = 
+      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&apikey={}}`
       if(searchQuery) {
-        url =  
+        url =  `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&apikey={}}`
+
       }
              
       const response = await axios.get(url)
