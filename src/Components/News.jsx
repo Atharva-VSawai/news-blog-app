@@ -24,7 +24,7 @@ const categories = [
   'business',
 ]
 
-const News = ({onShowBlogs}) => {
+const News = ({ onShowBlogs, blogs }) => {
   const [headline, setHeadline] = useState(null)
   const [news, setNews] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('general')
@@ -38,11 +38,11 @@ const News = ({onShowBlogs}) => {
   useEffect(() => {
     const fetchNews = async () => {
       let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&apikey={}}`
-      if(searchQuery) {
-        url =  `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&apikey={}}`
+      if (searchQuery) {
+        url = `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&apikey={}}`
 
       }
-             
+
       const response = await axios.get(url)
       const fetchedNews = response.data.articles
 
@@ -68,7 +68,7 @@ const News = ({onShowBlogs}) => {
     setSelectedCategory(category);  // <-- Fix: Update selected category
     setSearchQuery('');  // Optional: Reset search query
   };
-  
+
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -88,7 +88,7 @@ const News = ({onShowBlogs}) => {
         ((bookmark) => bookmark.title === article.title) ?
         prevBookmarks.filter((bookmark) => bookmark.title !== article.title) :
         [...prevBookmarks, article]
-        localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks))
+      localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks))
       return updatedBookmarks
     })
   }
@@ -181,11 +181,13 @@ const News = ({onShowBlogs}) => {
           onDeleteBookmark={handleBookmarkClick}
         />
         <div className='my-blogs'>
-            <h1 className="my-blogs-heading">My Blogs</h1>
-            <div className="blog-posts">
-              <div className="blog-post">
-                <img src={blogImg1} alt="" />
-                <h3>Lorem ipsum dolor sit.</h3>
+          <h1 className="my-blogs-heading">My Blogs</h1>
+          <div className="blog-posts">
+            {blogs.map((blog, index) => (
+              <div key={index} className='blog-post'>
+                <img src={blog.image || noImg} alt={blog.title} />
+                <h3>{blog.title}</h3>
+                <p>{blog.content}</p>
                 <div className="post-buttons">
                   <button className="edit-post">
                     <i className="bx bxs-edit"></i>
@@ -195,46 +197,8 @@ const News = ({onShowBlogs}) => {
                   </button>
                 </div>
               </div>
-
-              <div className="blog-post">
-                <img src={blogImg2} alt="" />
-                <h3>Lorem ipsum dolor sit.</h3>
-                <div className="post-buttons">
-                  <button className="edit-post">
-                    <i className="bx bxs-edit"></i>
-                  </button>
-                  <button className="delete-post">
-                    <i className="bx bxs-x-circle"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div className="blog-post">
-                <img src={blogImg3} alt="" />
-                <h3>Lorem ipsum dolor sit.</h3>
-                <div className="post-buttons">
-                  <button className="edit-post">
-                    <i className="bx bxs-edit"></i>
-                  </button>
-                  <button className="delete-post">
-                    <i className="bx bxs-x-circle"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div className="blog-post">
-                <img src={blogImg4} alt="" />
-                <h3>Lorem ipsum dolor sit.</h3>
-                <div className="post-buttons">
-                  <button className="edit-post">
-                    <i className="bx bxs-edit"></i>
-                  </button>
-                  <button className="delete-post">
-                    <i className="bx bxs-x-circle"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
+            ))}
+          </div>
         </div>
         <div className='weather-calendar'>
           <Weather />
@@ -247,7 +211,7 @@ const News = ({onShowBlogs}) => {
         </p>
         <p>
           <span>&copy; All Rights Reserved, By Atharva</span>
-        </p>  
+        </p>
       </footer>
     </div>
   )
