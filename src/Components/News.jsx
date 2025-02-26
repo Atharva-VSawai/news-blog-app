@@ -11,6 +11,7 @@ import blogImg4 from '../assets/images/blog4.jpg'
 import axios from 'axios'
 import NewsModal from './NewsModal'
 import Bookmarks from './Bookmarks'
+import BlogsModal from './BlogsModal'
 
 const categories = [
   'general',
@@ -34,6 +35,8 @@ const News = ({ onShowBlogs, blogs }) => {
   const [selectedArticle, setSelectedArticle] = useState(null)
   const [bookmarks, setBookmarks] = useState([])
   const [showBookmarksModal, setShowBookmarksModal] = useState(false)
+  const [selectedPost, setSelectedPost] = useState(null)
+  const [showBlogModal, setShowBlogModal] = useState(false)
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -91,6 +94,16 @@ const News = ({ onShowBlogs, blogs }) => {
       localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks))
       return updatedBookmarks
     })
+  }
+
+  const handleBlogClick = (blog) => {
+    setSelectedPost(blog)
+    setShowBlogModal(true)
+  }
+
+  const closeBlogModal = () => {
+    setShowBlogModal(false)
+    setSelectedPost(null)
   }
 
   return (
@@ -184,7 +197,7 @@ const News = ({ onShowBlogs, blogs }) => {
           <h1 className="my-blogs-heading">My Blogs</h1>
           <div className="blog-posts">
             {blogs.map((blog, index) => (
-              <div key={index} className='blog-post'>
+              <div key={index} className='blog-post' onClick={() => handleBlogClick(blog)}>
                 <img src={blog.image || noImg} alt={blog.title} />
                 <h3>{blog.title}</h3>
                 <p>{blog.content}</p>
@@ -199,6 +212,10 @@ const News = ({ onShowBlogs, blogs }) => {
               </div>
             ))}
           </div>
+          {selectedPost && showBlogModal && (
+            <BlogsModal show = {showBlogModal} blog= {selectedPost} onClose = {closeBlogModal}/>
+          )}
+          
         </div>
         <div className='weather-calendar'>
           <Weather />
