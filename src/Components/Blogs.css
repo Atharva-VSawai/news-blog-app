@@ -188,3 +188,29 @@
     font-weight: bold;
     text-align: center;
 }
+
+/* Custom toast styles */
+.custom-toast {
+    font-size: 22px !important; /* Increased font size */
+    font-weight: bold;
+    text-align: center;
+    padding: 25px !important; /* Increased padding */
+    min-height: 90px !important; /* Increased height */
+}
+
+/* Modify toast container */
+.Toastify__toast {
+    min-height: 90px !important; /* Increased height */
+    font-size: 22px !important; /* Larger font size */
+    padding: 20px !important; /* Increased padding */
+}
+
+/* Modify toast close button */
+.Toastify__close-button {
+    font-size: 24px !important; /* Increased close button size */
+}
+
+/* Modify toast progress bar */
+.Toastify__progress-bar {
+    height: 8px !important; /* Increased progress bar thickness */
+}

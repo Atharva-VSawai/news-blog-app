@@ -22,10 +22,9 @@ const categories = [
   'sports',
   'health',
   'science',
-  'business',
 ]
 
-const News = ({ onShowBlogs, blogs }) => {
+const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
   const [headline, setHeadline] = useState(null)
   const [news, setNews] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('general')
@@ -40,12 +39,11 @@ const News = ({ onShowBlogs, blogs }) => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&apikey={}}`
-      if (searchQuery) {
-        url = `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&apikey={}}`
+      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&apikey={}`
+      if(searchQuery) {
+        url = ` https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&apikey={}`
 
       }
-
       const response = await axios.get(url)
       const fetchedNews = response.data.articles
 
@@ -196,26 +194,42 @@ const News = ({ onShowBlogs, blogs }) => {
         <div className='my-blogs'>
           <h1 className="my-blogs-heading">My Blogs</h1>
           <div className="blog-posts">
-            {blogs.map((blog, index) => (
-              <div key={index} className='blog-post' onClick={() => handleBlogClick(blog)}>
-                <img src={blog.image || noImg} alt={blog.title} />
-                <h3>{blog.title}</h3>
-                <p>{blog.content}</p>
-                <div className="post-buttons">
-                  <button className="edit-post">
-                    <i className="bx bxs-edit"></i>
-                  </button>
-                  <button className="delete-post">
-                    <i className="bx bxs-x-circle"></i>
-                  </button>
-                </div>
-              </div>
-            ))}
+          {blogs.map((blog, index) => {
+  console.log("Rendering blog:", blog); // ✅ Debugging each blog
+
+  if (!blog) {
+    console.error(`Blog at index ${index} is null or undefined!`);
+    return null; // ✅ Prevents crashing if blog is missing
+  }
+
+  return (
+    <div key={index} className="blog-post" onClick={() => handleBlogClick(blog)}>
+      <img src={blog?.image || noImg} alt={blog?.title || "Untitled"} />
+      <h3>{blog?.title || "Untitled"}</h3>
+      
+      <div className="post-buttons">
+        <button className="edit-post" onClick={(e) => {
+          e.stopPropagation();
+          onEditBlog(blog);
+        }}>
+          <i className="bx bxs-edit"></i>
+        </button>
+        <button className="delete-post" onClick={(e) => {
+          e.stopPropagation();
+          onDeleteBlog(blog);
+        }}>
+          <i className="bx bxs-x-circle"></i>
+        </button>
+      </div>
+    </div>
+  );
+})}
+
           </div>
           {selectedPost && showBlogModal && (
-            <BlogsModal show = {showBlogModal} blog= {selectedPost} onClose = {closeBlogModal}/>
+            <BlogsModal show={showBlogModal} blog={selectedPost} onClose={closeBlogModal} />
           )}
-          
+
         </div>
         <div className='weather-calendar'>
           <Weather />

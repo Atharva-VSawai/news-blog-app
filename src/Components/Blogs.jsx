@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import userImg from '../assets/images/user.jpg';
 import noImg from '../assets/images/no-img.png';
 import './Blogs.css';
 
-const Blogs = ({ onBack, onCreateBlog }) => {
+const Blogs = ({ onBack, onCreateBlog, editPost, isEditing}) => {
   const [showForm, setShowForm] = useState(false);
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
@@ -13,13 +13,39 @@ const Blogs = ({ onBack, onCreateBlog }) => {
   const [titleValid, setTitleValid] = useState(true);
   const [contentValid, setContentValid] = useState(true);
 
+  useEffect(() => {
+    if (isEditing && editPost) {
+      setImage(editPost.image);    
+      setTitle(editPost.title);
+      setContent(editPost.content);
+      setShowForm(true);
+    }
+    else {
+      setShowForm(false);
+      setImage(null);
+      setTitle('');
+      setContent('');
+    }
+  }, [isEditing, editPost])
+
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const maxSize = 1 * 1024 * 1024;
+
+      if (file.size > maxSize) {
+        toast.error('Image size should not exceed 1MB', {
+          className: 'custom-toast',
+        });
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         setImage(event.target.result);
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(file);
     }
   };
 
@@ -51,7 +77,7 @@ const Blogs = ({ onBack, onCreateBlog }) => {
     if (!isValid) return;
 
     const newBlog = { image: image || noImg, title, content };
-    onCreateBlog(newBlog);
+    onCreateBlog(newBlog, isEditing);
 
     toast.success('Post submitted successfully!', {
       position: 'top-right',
@@ -86,7 +112,7 @@ const Blogs = ({ onBack, onCreateBlog }) => {
         )}
         {showForm && (
           <div className="blogs-right-form">
-            <h1>New Post</h1>
+            <h1>{isEditing ? "Edit Post" : 'New Post'}</h1>
             <form onSubmit={handleSubmit}>
               <div className="img-upload">
                 <label htmlFor="file-upload" className="file-upload">
@@ -109,7 +135,7 @@ const Blogs = ({ onBack, onCreateBlog }) => {
                 onChange={handleContentChange}
               />
               <button type="submit" className="submit-btn">
-                Submit
+                {isEditing ? "Update Post" : "Submit Post" }
               </button>
             </form>
           </div>
