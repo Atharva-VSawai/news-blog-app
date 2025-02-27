@@ -352,3 +352,47 @@
     border-radius: 0 0 1rem 1rem;
 }
 
+@media (max-width: 768px) {
+    .news-content {
+        flex-direction: column;
+        row-gap: 2rem;
+        padding: 1rem;
+    }
+
+    .navbar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .categories {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .news-section {
+        width: 100%;
+    }
+
+    .headline {
+        height: auto;
+        min-height: 15rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 3.5rem;
+    }
+
+    .nav-heading {
+        font-size: 2rem;
+    }
+
+    .headline-title {
+        font-size: 1.8rem;
+        padding: 0.5rem;
+    }
+}
+2rem;

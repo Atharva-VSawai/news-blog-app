@@ -77,3 +77,13 @@
 .read-more-link:active{
     transform: translateY(0.1rem);
 }
+
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+    }
+
+    .modal-title {
+        font-size: 1.8rem;
+    }
+}

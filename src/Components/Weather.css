@@ -103,3 +103,18 @@
     color: #ddd;
     margin-bottom: 12rem;
 }
+
+@media (max-width: 768px) {
+    .weather {
+        height: auto;
+        padding: 1.5rem;
+    }
+
+    .search-top {
+        font-size: 2rem;
+    }
+
+    .search-location input {
+        width: 80%;
+    }
+}

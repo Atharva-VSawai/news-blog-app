@@ -85,3 +85,14 @@
     background: linear-gradient(to right, #b88efc, #6877f4);
     border-radius: 50%;
 }
+
+@media (max-width: 768px) {
+    .calender {
+        min-width: 100%;
+        height: auto;
+    }
+
+    .navigate-date h2 {
+        font-size: 1.8rem;
+    }
+}

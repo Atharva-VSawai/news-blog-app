@@ -41,7 +41,7 @@
     background: linear-gradient(to right, #b88efc, #6877f4);
     border: none;
     border-radius: 5rem;
-    font-size: 2.5rem;
+    font-size: clamp(1.4rem, 1.5cqi, 2.5rem);
     font-weight: bold;
     text-transform: uppercase;
     color: #fff;
@@ -213,4 +213,33 @@
 /* Modify toast progress bar */
 .Toastify__progress-bar {
     height: 8px !important; /* Increased progress bar thickness */
+}
+
+
+@media (max-width: 768px) {
+    .blogs {
+        flex-direction: column;
+    }
+
+    .blogs-left, .blogs-right {
+        width: 100%;
+        height: auto;
+    }
+
+    .blogs-left img {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .post-btn {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-btn {
+        width: 100%;
+        font-size: 1.6rem;
+    }
 }

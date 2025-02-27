@@ -9,7 +9,7 @@ const Weather = () => {
   useEffect(() => {
     const fetchDefaultLocation = async () => {
       const defaultLocation = "Pune";
-      const url = `https://api.openwthermap.org/data/2.5/weather?q=${defaultLocation}&units=metric&appid=f135399d50dc931f3c60eae740d30b76`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${defaultLocation}&units=metric&appid=`;
       const response = await axios.get(url);
       setData(response.data);
     };
@@ -19,7 +19,7 @@ const Weather = () => {
   const search = async () => {
     if (!location) return;
 
-    const url = `https://api.openathermap.org/data/2.5/weather?q=${location}&units=metric&appid=f135399d50dc931f3c60eae740d30b76`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=`;
 
     try {
       const response = await axios.get(url);

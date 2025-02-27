@@ -29,3 +29,13 @@ html {
   border-radius: 1rem;     
 }
 
+@media (max-width: 768px) {
+  .container {
+      padding: 1rem;
+  }
+
+  .news-blogs-app {
+      width: 100%;
+      height: auto;
+  }
+}
